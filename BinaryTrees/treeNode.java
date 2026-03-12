@@ -11,6 +11,11 @@ public class treeNode<T extends Comparable<T>> {
     public treeNode<T> right;
     public treeNode<T> parent;
 
+    public treeNode(T data) {
+        this.data = data;
+
+    }
+
     public treeNode(T data, treeNode<T> parent) {
         this.data = data;
         this.parent = parent;
