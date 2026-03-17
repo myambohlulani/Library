@@ -175,9 +175,8 @@ public class RedBlack<T extends Comparable<T>> {
         }
     }
 
-    private void visit(treeNode<T> node) {
-
-        System.out.println(node.color);
+    private void visit(TreeNode<T> node) {
+        String colour = node.color == Color.RED ? "RED" : "BLACK";
+        System.out.printf("%s(%s)", node.data, colour);
     }
-
 }
