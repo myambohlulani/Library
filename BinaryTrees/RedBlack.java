@@ -1,39 +1,47 @@
 package BinaryTrees;
 
-import java.awt.Color;
+import BinaryTrees.TreeNode.Color;
 
-public class redBlack<T extends Comparable<T>> {
+/**
+ * Implementation of RBT
+ *
+ * @author
+ * @version
+ */
+public class RedBlack<T extends Comparable<T>> {
+    public TreeNode<T> root;
 
-    public treeNode<T> root;
-
+    /**
+     * This method insert a node recursively into the tree starting from the root
+     * node
+     *
+     * @param data the data to be added to the tree
+     */
     public void insert(T data) {
-
         this.root = this.insert(data, root);
-
+        this.root.color = Color.BLACK; // enforcing the root to be black
     }
 
-    private treeNode<T> insert(T data, treeNode<T> node) {
+    private TreeNode<T> insert(T data, TreeNode<T> node) {
         if (node == null) {
-            return new treeNode<>(data);
+            return new TreeNode<>(data);
         }
 
         if (data.compareTo(node.data) < 0) {
             node.left = this.insert(data, node.left);
-        }
-        else if (data.compareTo(node.data) > 0) {
+        } else if (data.compareTo(node.data) > 0) {
             node.right = this.insert(data, node.right);
         }
 
         return this.balance(node);
     }
 
-    private treeNode<T> balance(treeNode<T> node) {
-
+    private TreeNode<T> balance(TreeNode<T> node) {
         if (this.isRed(node.right) && !this.isRed(node.left)) {
             node = this.rotateLeft(node);
         }
 
-        if (this.isRed(node.left) && this.isRed(node.left.left)) {
+        if (node.left != null && this.isRed(node.left) && this.isRed(node.left.left)) {
             node = this.rotateRight(node);
         }
 
@@ -45,13 +53,12 @@ public class redBlack<T extends Comparable<T>> {
 
     }
 
-    private boolean isRed(treeNode<T> node) {
+    private boolean isRed(TreeNode<T> node) {
         return (node != null && node.color == Color.RED);
     }
 
-    private treeNode<T> rotateLeft(treeNode<T> node) {
-
-        treeNode<T> rightChild = node.right;
+    private TreeNode<T> rotateLeft(TreeNode<T> node) {
+        TreeNode<T> rightChild = node.right;
 
         node.right = rightChild.left;
         rightChild.left = node;
@@ -62,9 +69,8 @@ public class redBlack<T extends Comparable<T>> {
         return rightChild;
     }
 
-    private treeNode<T> rotateRight(treeNode<T> node) {
-
-        treeNode<T> leftChild = node.left;
+    private TreeNode<T> rotateRight(TreeNode<T> node) {
+        TreeNode<T> leftChild = node.left;
 
         node.left = leftChild.right;
         leftChild.right = node;
@@ -76,41 +82,40 @@ public class redBlack<T extends Comparable<T>> {
     }
 
     // Both children red
-    private void flipColor(treeNode<T> node) {
-
+    private void flipColor(TreeNode<T> node) {
         node.color = Color.RED;
         node.left.color = node.right.color = Color.BLACK;
     }
 
+    /**
+     * This method check if a data exists in the tree or not
+     */
     public boolean search(T data) {
-
         return this.search(data, this.root);
     }
 
-    private boolean search(T data, treeNode<T> node) {
-        if (node == null || this.isEmpty()) {
+    private boolean search(T data, TreeNode<T> node) {
+        if (node == null) {
             return false;
         }
 
         if (data.compareTo(node.data) < 0) {
             return this.search(data, node.left);
-        }
-        else if (data.compareTo(node.data) > 0) {
+        } else if (data.compareTo(node.data) > 0) {
             return this.search(data, node.right);
         }
 
         return true;
     }
 
-    public boolean isEmpty() {
-        return null == this.root;
-    }
-
+    /**
+     * Implementation of preOrder traversal
+     */
     public void preOrder() {
         this.preOrder(this.root);
     }
 
-    private void preOrder(treeNode<T> node) {
+    private void preOrder(TreeNode<T> node) {
         if (node != null) {
             this.visit(node);
             this.preOrder(node.left);
