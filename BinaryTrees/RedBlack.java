@@ -123,12 +123,14 @@ public class RedBlack<T extends Comparable<T>> {
         }
     }
 
+    /**
+     * Implementation of inorder traversal
+     */
     public void inOrder() {
         this.inOrder(this.root);
     }
 
-    private void inOrder(treeNode<T> node) {
-
+    private void inOrder(TreeNode<T> node) {
         if (node != null) {
             this.inOrder(node.left);
             this.visit(node);
@@ -136,11 +138,14 @@ public class RedBlack<T extends Comparable<T>> {
         }
     }
 
+    /**
+     * Implementation of post order Traversal
+     */
     public void postOrder() {
         this.postOrder(this.root);
     }
 
-    private void postOrder(treeNode<T> node) {
+    private void postOrder(TreeNode<T> node) {
         if (node != null) {
             this.postOrder(node.left);
             this.postOrder(node.right);
@@ -148,11 +153,13 @@ public class RedBlack<T extends Comparable<T>> {
         }
     }
 
+    /**
+     * Implementation of levelOrder Traversal
+     */
     public void levelOrder() {
-
-        java.util.Queue<treeNode<T>> treeQueue = new java.util.ArrayDeque<>();
+        java.util.Queue<TreeNode<T>> treeQueue = new java.util.ArrayDeque<>();
         treeQueue.add(this.root);
-        treeNode<T> current;
+        TreeNode<T> current;
 
         while (treeQueue.peek() != null) {
             current = treeQueue.remove();
